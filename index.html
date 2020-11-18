@@ -5,49 +5,268 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>komissarova.net</title>
   <style>
+    :root {
+      --tilesize: 10vmin;
+      --gap: 1vmin;
+    }
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-size: 2rem;
-      font-family:monospace;
+      transition: all 0.3s ease-in-out 0s;
+      font-family: monospace;
+      font-size: 5vmin;
+      color: whitesmoke;
       background-color: black;
-      color: teal;
-      transition: ease-in-out 0.3s;
     }
     body {
       display: flex;
+      width: 100vw;
       height: 100vh;
       align-items: center;
       justify-content: center;
+      flex-direction: row;
     }
-    td {
-      display: table-cell;
-      height: 3rem;
-      width: 3rem;
-      text-align: center;
-      background-color: darkblue;
-      color: whitesmoke;
-      border-radius: 0.3rem;
-      text-transform: uppercase;
-    }
-    td:hover {
+    .game {
+      width: calc((var(--tilesize) + var(--gap)) * 4 + var(--gap));
+      height: calc((var(--tilesize) + var(--gap))* 4 + var(--gap));
       background-color: whitesmoke;
-      color: darkblue;
+      margin: var(--gap);
+      border-radius: var(--gap);
+    }
+    .tile {
+      position: absolute;
+      width: var(--tilesize);
+      height: var(--tilesize);
+      border-radius: var(--gap);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: darkblue;
+    }
+    button {
+      margin: 10px;
+      padding: 10px;
+      border: none;
+      background-color: darkblue;
+      border-radius: var(--gap);
+      outline: none;
+      width: calc((var(--tilesize) + var(--gap)) * 4 + var(--gap));
+      height: calc((var(--tilesize) + var(--gap)) * 4 + var(--gap));
+    }
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      
+    }
+    [data-place="00"] {transform: translate(calc(var(--tilesize) * 0 + var(--gap) * 1), calc(var(--tilesize) * 0 + var(--gap) * 1));}
+    [data-place="01"] {transform: translate(calc(var(--tilesize) * 0 + var(--gap) * 1), calc(var(--tilesize) * 1 + var(--gap) * 2));}
+    [data-place="02"] {transform: translate(calc(var(--tilesize) * 0 + var(--gap) * 1), calc(var(--tilesize) * 2 + var(--gap) * 3));}
+    [data-place="03"] {transform: translate(calc(var(--tilesize) * 0 + var(--gap) * 1), calc(var(--tilesize) * 3 + var(--gap) * 4));}
+    [data-place="10"] {transform: translate(calc(var(--tilesize) * 1 + var(--gap) * 2), calc(var(--tilesize) * 0 + var(--gap) * 1));}
+    [data-place="11"] {transform: translate(calc(var(--tilesize) * 1 + var(--gap) * 2), calc(var(--tilesize) * 1 + var(--gap) * 2));}
+    [data-place="12"] {transform: translate(calc(var(--tilesize) * 1 + var(--gap) * 2), calc(var(--tilesize) * 2 + var(--gap) * 3));}
+    [data-place="13"] {transform: translate(calc(var(--tilesize) * 1 + var(--gap) * 2), calc(var(--tilesize) * 3 + var(--gap) * 4));}
+    [data-place="20"] {transform: translate(calc(var(--tilesize) * 2 + var(--gap) * 3), calc(var(--tilesize) * 0 + var(--gap) * 1));}
+    [data-place="21"] {transform: translate(calc(var(--tilesize) * 2 + var(--gap) * 3), calc(var(--tilesize) * 1 + var(--gap) * 2));}
+    [data-place="22"] {transform: translate(calc(var(--tilesize) * 2 + var(--gap) * 3), calc(var(--tilesize) * 2 + var(--gap) * 3));}
+    [data-place="23"] {transform: translate(calc(var(--tilesize) * 2 + var(--gap) * 3), calc(var(--tilesize) * 3 + var(--gap) * 4));}
+    [data-place="30"] {transform: translate(calc(var(--tilesize) * 3 + var(--gap) * 4), calc(var(--tilesize) * 0 + var(--gap) * 1));}
+    [data-place="31"] {transform: translate(calc(var(--tilesize) * 3 + var(--gap) * 4), calc(var(--tilesize) * 1 + var(--gap) * 2));}
+    [data-place="32"] {transform: translate(calc(var(--tilesize) * 3 + var(--gap) * 4), calc(var(--tilesize) * 2 + var(--gap) * 3));}
+    [data-place="33"] {transform: translate(calc(var(--tilesize) * 3 + var(--gap) * 4), calc(var(--tilesize) * 3 + var(--gap) * 4));}
+
+    @media all and (orientation:portrait) {
+      body {
+        flex-direction: column;
+      }
+      button {
+        height: auto;
+      }
     }
   </style>
 </head>
 <body>
-    <table>
-      <tr>
-        <td>k</td><td>0</td><td>m</td><td>1</td>
-      </tr><tr>
-        <td>5</td><td>5</td><td>4</td><td>r</td>
-      </tr><tr>
-        <td>0</td><td>v</td><td>4</td><td>.</td>
-      </tr><tr>
-        <td>n</td><td>3</td><td>7</td>
-      </tr>
-    </table>
+<div class="game">
+  <div class="tile" data-place="00">1</div>
+  <div class="tile" data-place="10">2</div>
+  <div class="tile" data-place="20">3</div>
+  <div class="tile" data-place="30">4</div>
+  <div class="tile" data-place="01">5</div>
+  <div class="tile" data-place="11">6</div>
+  <div class="tile" data-place="21">7</div>
+  <div class="tile" data-place="31">8</div>
+  <div class="tile" data-place="02">9</div>
+  <div class="tile" data-place="12">10</div>
+  <div class="tile" data-place="22">11</div>
+  <div class="tile" data-place="32">12</div>
+  <div class="tile" data-place="03">13</div>
+  <div class="tile" data-place="13">14</div>
+  <div class="tile" data-place="23">15</div>
+</div>
+<div class="buttons">
+  <button class="play">Play</button>
+</div>
+
+<script>
+
+  const emptyCell = {row:3, col: 3}
+  const allTiles = new Array
+  let inProgress = false
+  let aim = 'K0M1554R0V4.N37'
+  
+  function boolIt(val) {
+    return val === 'true'
+  }
+
+  function intIt(val) {
+    return Number.parseInt(val, 10)
+  }
+
+  function itCanBeMoved(row, col) {
+    return row===emptyCell.row && col!==emptyCell.col || row!==emptyCell.row && col===emptyCell.col
+  }
+  function itsPossible() {
+    let tempArr = allTiles.map(e => {return {order:intIt(e.dataset.place[1])*4 + intIt(e.dataset.place[0]), val:intIt(e.innerText)}}).sort((a,b) => a.order - b.order)
+    return (tempArr.reduce((acc1,cur1,idx1,src1) => acc1+=src1.reduce((acc2,cur2,idx2) => acc2 += idx2>idx1&&cur1.val<cur2.val?1:0,0), 0) + emptyCell.row) % 2 === 0
+  }
+
+  function doRotate() {
+    allTiles.forEach(e => e.dataset.place = 3-intIt(e.dataset.place[1]).toString(10)+e.dataset.place[0])
+    let temp = emptyCell.row
+    emptyCell.row = emptyCell.col
+    emptyCell.col = 3-temp
+  }
+
+  function doShuffle() {
+    let tempArr = new Array
+    for (let i = 0; i<4; i++) {
+      for (let j = 0; j<4; j++) {
+        tempArr.push(i.toString(10) + j.toString(10))
+      }
+    }
+    allTiles.forEach(tile => tile.dataset.place = tempArr.splice(Math.floor(Math.random() * tempArr.length),1))
+    emptyCell.row = intIt(tempArr[0][1])
+    emptyCell.col = intIt(tempArr[0][0])
+    if (!itsPossible()) {
+      doRotate()
+    }
+  }
+
+  function doReset() {
+    emptyCell.row = 3
+    emptyCell.col = 3
+    allTiles.forEach((tile,idx) => tile.dataset.place = Math.floor(idx % 4).toString(10)+Math.floor(idx / 4).toString(10))
+  }
+
+  function doWin() {
+    inProgress = false
+    const playButton = document.getElementsByClassName('play')[0]
+    playButton.innerText = 'Play'
+  }
+
+  function textFromTiles() {
+    return [...allTiles.map(tile => {return {
+      place:intIt(tile.dataset.place[1]) * 4 + intIt(tile.dataset.place[0]),
+      text: tile.innerText}}),
+    {
+      place:emptyCell.row*4+emptyCell.col,
+      text:' '
+    }].sort((a,b) => a.place-b.place).map(e => e.text).join('')
+  }
+
+  function myClick(e) {
+
+    const elem = e.srcElement
+    const elemPlace = {
+      row: intIt(elem.dataset.place[1]),
+      col: intIt(elem.dataset.place[0])
+    }
+
+    if (itCanBeMoved(elemPlace.row, elemPlace.col)) {
+      let movements = new Array
+      if (emptyCell.col === elemPlace.col) {
+        if (emptyCell.row > elemPlace.row) {
+          // move tiles down
+          for (let i = emptyCell.row; i>elemPlace.row;i--) {
+            movements.push({
+              from: elemPlace.col.toString(10) + (i-1).toString(10),
+              to:   elemPlace.col.toString(10) + (i).toString(10)
+            })
+          }
+        } else {
+          // move tiles up
+          for (let i = emptyCell.row; i<elemPlace.row;i++) {
+            movements.push({
+              from: elemPlace.col.toString(10) + (i+1).toString(10),
+              to:   elemPlace.col.toString(10) + (i).toString(10)
+            })
+          }
+        }
+        emptyCell.row = elemPlace.row
+      } else if (emptyCell.row === elemPlace.row) {
+        if (emptyCell.col > elemPlace.col) {
+          // move tiles right
+          for (let i = emptyCell.col; i>elemPlace.col;i--) {
+            movements.push({
+              from: (i-1).toString(10) + elemPlace.row.toString(10),
+              to:   (i).toString(10)   + elemPlace.row.toString(10)
+            })
+          }
+        } else {
+          // move tiles left
+          for (let i = emptyCell.col; i<elemPlace.col;i++) {
+            movements.push({
+              from: (i+1).toString(10) + elemPlace.row.toString(10),
+              to: (i).toString(10) + elemPlace.row.toString(10)
+            })
+          }
+        }
+        emptyCell.col = elemPlace.col
+      }
+      movements.map(
+        move => {
+          const aTile = allTiles.filter(tile => tile.dataset.place === move.from);
+          return {...move, elem: aTile[0]}
+        }
+      ).forEach(move => move.elem.dataset.place = move.to)
+    }
+    const tilesText = textFromTiles()
+    if (tilesText===aim+' ') {
+      doWin()
+    }
+  }
+  function clickPlay(e) {
+    inProgress = !inProgress
+    if (inProgress) {
+      e.srcElement.innerText = "Give up"
+      doShuffle()
+    } else {
+      e.srcElement.innerText = "Play"
+      doReset()
+    }
+  }
+
+  function init() {
+    const tempTiles = document.getElementsByClassName('tile')
+    const tempArr = aim.split('')
+    Array.prototype.forEach.call(tempTiles, function(element,index) {
+      element.addEventListener('click', myClick, false)
+      element.innerText = tempArr[index]
+      allTiles.push(element)
+    });
+
+    const playButton = document.getElementsByClassName('play')[0]
+    playButton.addEventListener('click', clickPlay, false)
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.removeEventListener('DOMContentLoaded',arguments.callee, false)
+    init()
+  }, false)
+
+</script>
 </body>
 </html>
