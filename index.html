@@ -6,7 +6,7 @@
   <title>komissarova.net</title>
   <style>
     :root {
-      --tilesize: 20vmin;
+      --tilesize: 9vmin;
       --gap: 1vmin;
     }
     * {
@@ -52,7 +52,7 @@
       border-radius: var(--gap);
       outline: none;
       width: calc((var(--tilesize) + var(--gap)) * 4 + var(--gap));
-      height: calc((var(--tilesize) + var(--gap)) * 4 + var(--gap));
+      height: auto;
     }
     .buttons {
       display: flex;
@@ -79,10 +79,14 @@
     [data-place="33"] {transform: translate(calc(var(--tilesize) * 3 + var(--gap) * 4), calc(var(--tilesize) * 3 + var(--gap) * 4));}
 
     @media all and (orientation:portrait) {
+      :root {
+        --tilesize: 18vmin;
+      }
       body {
         flex-direction: column;
       }
       button {
+        width: calc((var(--tilesize) + var(--gap)) * 4 + var(--gap));
         height: auto;
       }
     }
