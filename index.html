@@ -6,7 +6,7 @@
   <title>komissarova.net</title>
   <style>
     :root {
-      --tilesize: 9vmin;
+      --tilesize: 15vmin;
       --gap: 1vmin;
     }
     * {
@@ -14,7 +14,7 @@
       padding: 0;
       box-sizing: border-box;
       transition: all 0.3s ease-in-out 0s;
-      font-family: monospace;
+      font-family:monospace;
       font-size: calc(var(--tilesize) * .5);
       color: whitesmoke;
       background-color: black;
@@ -30,7 +30,7 @@
     .game {
       width: calc((var(--tilesize) + var(--gap)) * 4 + var(--gap));
       height: calc((var(--tilesize) + var(--gap))* 4 + var(--gap));
-      background-color: whitesmoke;
+      background-color: blanchedalmond;
       margin: var(--gap);
       border-radius: var(--gap);
     }
@@ -44,6 +44,18 @@
       justify-content: center;
       background-color: darkblue;
     }
+    .tile::before {
+      
+      position: absolute;
+      top: 5px;
+      left:5px;
+      color: gray;
+      content: attr(data-before);
+      background-color: none;
+      font-size: calc(var(--tilesize) * .2);
+
+    }
+
     button {
       margin: 10px;
       padding: 10px;
@@ -51,16 +63,12 @@
       background-color: darkblue;
       border-radius: var(--gap);
       outline: none;
-      width: calc((var(--tilesize) + var(--gap)) * 4 + var(--gap));
+      transform: rotate(-90deg);
+      width: auto;
       height: auto;
-    }
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       
     }
+
     [data-place="00"] {transform: translate(calc(var(--tilesize) * 0 + var(--gap) * 1), calc(var(--tilesize) * 0 + var(--gap) * 1));}
     [data-place="01"] {transform: translate(calc(var(--tilesize) * 0 + var(--gap) * 1), calc(var(--tilesize) * 1 + var(--gap) * 2));}
     [data-place="02"] {transform: translate(calc(var(--tilesize) * 0 + var(--gap) * 1), calc(var(--tilesize) * 2 + var(--gap) * 3));}
@@ -80,14 +88,17 @@
 
     @media all and (orientation:portrait) {
       :root {
-        --tilesize: 18vmin;
+        --tilesize: 15vmin;
       }
+      
       body {
         flex-direction: column;
       }
+      
       button {
         width: calc((var(--tilesize) + var(--gap)) * 4 + var(--gap));
         height: auto;
+        transform: rotate(0deg);
       }
     }
   </style>
@@ -110,10 +121,7 @@
   <div class="tile" data-place="13">14</div>
   <div class="tile" data-place="23">15</div>
 </div>
-<div class="buttons">
-  <button class="play">Play</button>
-</div>
-
+<button class="play">Play</button>
 <script>
 
   const emptyCell = {row:3, col: 3}
@@ -133,7 +141,7 @@
     return row===emptyCell.row && col!==emptyCell.col || row!==emptyCell.row && col===emptyCell.col
   }
   function itsPossible() {
-    let tempArr = allTiles.map(e => {return {order:intIt(e.dataset.place[1])*4 + intIt(e.dataset.place[0]), val:intIt(e.innerText)}}).sort((a,b) => a.order - b.order)
+    let tempArr = allTiles.map(e => {return {order:intIt(e.dataset.place[1])*4 + intIt(e.dataset.place[0]), val:intIt(e.dataset.number)}}).sort((a,b) => a.order - b.order)
     return (tempArr.reduce((acc1,cur1,idx1,src1) => acc1+=src1.reduce((acc2,cur2,idx2) => acc2 += idx2>idx1&&cur1.val<cur2.val?1:0,0), 0) + emptyCell.row) % 2 === 0
   }
 
@@ -259,6 +267,8 @@
     Array.prototype.forEach.call(tempTiles, function(element,index) {
       element.addEventListener('click', myClick, false)
       element.innerText = tempArr[index]
+      element.dataset.before = index+1
+      element.dataset.number = index+1
       allTiles.push(element)
     });
 
